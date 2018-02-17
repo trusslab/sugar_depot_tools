@@ -210,12 +210,16 @@ def Exec(content, global_scope, local_scope, filename='<unknown>'):
                 filename, getattr(node, 'lineno', '<unknown>')))
       value = _gclient_eval(node.value, global_scope, filename=filename)
 
-      if target.id in local_scope:
-        raise ValueError(
-            'invalid assignment: overrides var %r (file %r, line %s)' % (
-                target.id, filename, getattr(node, 'lineno', '<unknown>')))
+      #if target.id in local_scope:
+      #  raise ValueError(
+      #      'invalid assignment: overrides var %r (file %r, line %s)' % (
+      #          target.id, filename, getattr(node, 'lineno', '<unknown>')))
 
-      local_scope[target.id] = value
+      #local_scope[target.id] = value
+
+      if target.id not in local_scope:
+        local_scope[target.id] = value
+
     else:
       raise ValueError(
           'unexpected AST node: %s %s (file %r, line %s)' % (
